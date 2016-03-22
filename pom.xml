@@ -15,6 +15,7 @@
         <java.version>1.6</java.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <cglib.version>2.2.2</cglib.version>
+        <jackson.version>2.3.3</jackson.version>
         <mybatis.generator.configurationFile>${basedir}/src/main/webapp/resources/generatorConfig.xml</mybatis.generator.configurationFile>
     </properties>
 
@@ -52,6 +53,23 @@
             <scope>test</scope>
         </dependency>
         <!-- Spring core & mvc end -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
 
         <!--MyBatis start-->
         <dependency>
@@ -99,13 +117,13 @@
 
 
 
-    <repositories>
-        <repository>
-            <id>springsource-milestones</id>
-            <name>SpringSource Milestones Proxy</name>
-            <url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>springsource-milestones</id>-->
+            <!--<name>SpringSource Milestones Proxy</name>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <build>
         <finalName>com.rentahouse</finalName>
