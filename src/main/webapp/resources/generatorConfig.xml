@@ -23,22 +23,23 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.tenement.model" targetProject="src">
-            <property name="enableSubPackages" value="true" />
+        <!--targetPackge路径 targetProject物理路径 -->
+        <javaModelGenerator targetPackage="com.tenement.model" targetProject="F:\myCollection\tenement\src\main\java">
+            <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.tenement.mappers"  targetProject="src">
-            <property name="enableSubPackages" value="true" />
+        <sqlMapGenerator targetPackage="com.tenement.mapper"  targetProject="F:\myCollection\tenement\src\main\java">
+            <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mappers"  targetProject="src">
-            <property name="enableSubPackages" value="true" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\myCollection\tenement\src\main\java">
+            <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="user" domainObjectName="user" >
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="user" domainObjectName="User" >
             <property name="useActualColumnNames" value="false"/>
-            <columnOverride column="domainId" property="domainId" />
+            <!--<columnOverride column="domainId" property="domainId" />-->
         </table>
     </context>
 </generatorConfiguration>
