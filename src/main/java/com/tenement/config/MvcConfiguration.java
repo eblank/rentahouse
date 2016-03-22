@@ -1,4 +1,4 @@
-package tenement.config;
+package com.tenement.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
