@@ -32,7 +32,7 @@
        </bean>
 
        <!-- 自动扫描 -->
-       <context:component-scan base-package="tenement"/>
+       <context:component-scan base-package="com.tenement.*"/>
        <!-- 自动扫描 -->
 
        <!-- 全局异常配置 start -->
@@ -55,5 +55,4 @@
               <property name="defaultStatusCode" value="200"/>
        </bean>
        <!-- 全局异常配置 end -->
-
 </beans>
