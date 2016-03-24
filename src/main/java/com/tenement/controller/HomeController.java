@@ -7,18 +7,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-
 @Controller
+@RequestMapping(value = "/home")
 public class HomeController {
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 
 
-	@RequestMapping(value="/")
-	public String test(Model model) throws IOException{
-		User user = userMapper.selectByPrimaryKey(1L);
-		model.addAttribute("user", user.getUser());
+	@RequestMapping(value="/test")
+	public String test(Model model) {
+		User user = new User("逗逼","11111");
+		int result = userMapper.insert(user);
+		model.addAttribute("number", result);
+		model.addAttribute("user", "张三");
 		return "home";
 	}
+
 }
