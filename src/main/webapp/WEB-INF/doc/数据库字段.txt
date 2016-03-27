@@ -1,0 +1,18 @@
+main_title
+update_time
+primary_pic_List
+house_price
+pay_method
+house_property {
+	all_room,
+	living_room,
+	rest_room,
+	area,
+	floor,
+	rent_floor,
+	decoration_type,
+	toward,
+	house_type
+}
+
+
