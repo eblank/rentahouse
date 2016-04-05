@@ -18,7 +18,7 @@
         <jackson.version>2.3.3</jackson.version>
         <slf4j.version>1.7.12</slf4j.version>
         <mybatis.version>3.3.0</mybatis.version>
-        <mybatis.generator.configurationFile>${basedir}/src/main/webapp/resources/generatorConfig.xml</mybatis.generator.configurationFile>
+        <mybatis.generator.configurationFile>${basedir}/src/main/resources/generatorConfig.xml</mybatis.generator.configurationFile>
     </properties>
 
     <dependencies>

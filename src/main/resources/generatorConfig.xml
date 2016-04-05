@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry location="F:\cloudpay\mysql-connector-java-5.1.38.jar" />
+    <classPathEntry location="D:\warehouse\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/tenement"
                         userId="root"
-                        password="root">
+                        password="1">
         </jdbcConnection>
 
         <!--
@@ -24,16 +24,16 @@
         </javaTypeResolver>
 
         <!--targetPackge路径 targetProject物理路径 -->
-        <javaModelGenerator targetPackage="com.tenement.model" targetProject="F:\myCollection\tenement\src\main\java">
+        <javaModelGenerator targetPackage="com.tenement.model" targetProject="F:\MyProject\tenement\src\main\java">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.tenement.mapper"  targetProject="F:\myCollection\tenement\src\main\java">
+        <sqlMapGenerator targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\java">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\myCollection\tenement\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 

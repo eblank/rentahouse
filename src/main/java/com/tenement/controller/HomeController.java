@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping(value = "/home")
 public class HomeController {
@@ -16,7 +18,7 @@ public class HomeController {
 
 	@RequestMapping(value="/test")
 	public String test(Model model) {
-		User user = new User("逗逼","11111");
+		User user = new User("逗逼", "张三", new Date(), "1");
 		int result = userMapper.insert(user);
 		model.addAttribute("number", result);
 		model.addAttribute("user", "张三");

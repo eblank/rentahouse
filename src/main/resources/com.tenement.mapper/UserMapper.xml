@@ -3,10 +3,9 @@
 <mapper namespace="com.tenement.mapper.UserMapper" >
 
   <insert id="insert" parameterType="com.tenement.model.User">
-    insert into user(username, phone
+    insert into user(nick_name, real_name,create_time,login_password
       )
-    values (#{username,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
+    values (#{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{createTime}, #{loginPassword,jdbcType=VARCHAR}
       )
   </insert>
-
 </mapper>
