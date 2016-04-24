@@ -3,13 +3,6 @@ package com.tenement.model;
 import java.util.Date;
 
 public class User {
-    public User(String nickName, String realName, Date createTime, String loginPassword) {
-        this.nickName = nickName;
-        this.realName = realName;
-        this.createTime = createTime;
-        this.loginPassword = loginPassword;
-    }
-
     private Long id;
 
     private String nickName;
@@ -45,6 +38,38 @@ public class User {
     private String neighbourhood;
 
     private String housingEstate;
+
+    public User() {
+    }
+
+    public User(String nickName, Date createTime, String email, String loginPassword) {
+        this.nickName = nickName;
+        this.createTime = createTime;
+        this.email = email;
+        this.loginPassword = loginPassword;
+    }
+
+    public User(Long id, String nickName, String realName, Date createTime, String mobile, String sex, String address, Long memberState, Long memberType, String loginPassword, String email, String country, String province, String city, String county, String town, String neighbourhood, String housingEstate) {
+
+        this.id = id;
+        this.nickName = nickName;
+        this.realName = realName;
+        this.createTime = createTime;
+        this.mobile = mobile;
+        this.sex = sex;
+        this.address = address;
+        this.memberState = memberState;
+        this.memberType = memberType;
+        this.loginPassword = loginPassword;
+        this.email = email;
+        this.country = country;
+        this.province = province;
+        this.city = city;
+        this.county = county;
+        this.town = town;
+        this.neighbourhood = neighbourhood;
+        this.housingEstate = housingEstate;
+    }
 
     public Long getId() {
         return id;

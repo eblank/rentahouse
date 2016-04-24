@@ -27,6 +27,26 @@
               <!--</mvc:message-converters>-->
        <!--</mvc:annotation-driven>-->
 
+       <!--start 返回json格式-->
+       <bean id="fastJsonHttpMessageConverter"
+             class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+              <property name="supportedMediaTypes">
+                     <list>
+                            <value>application/json;charset=UTF-8</value>
+                     </list>
+              </property>
+       </bean>
+
+       <bean
+               class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+              <property name="messageConverters">
+                     <list>
+                            <ref bean="fastJsonHttpMessageConverter" />
+                     </list>
+              </property>
+       </bean>
+       <!--end 返回json格式-->
+
        <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >-->
               <!--<property name="defaultEncoding" value="UTF-8"/>-->
               <!--<property name="maxUploadSize" value="10048576"/>-->
@@ -35,12 +55,15 @@
 
 
        <!-- 自动扫描 -->
-       <context:component-scan base-package="com.tenement.controller"/>
+       <context:component-scan base-package="com.tenement"/>
        <!-- 自动扫描 -->
 
 
        <mvc:annotation-driven />
-       <mvc:view-controller path="/" view-name="index"/>
+       <mvc:view-controller path="/" view-name="login"/>
+
+       <!--添加静态资源映射-->
+       <mvc:resources mapping="/assets/**" location="/assets/"/>
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/"/>
