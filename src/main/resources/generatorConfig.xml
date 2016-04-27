@@ -29,15 +29,35 @@
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\java">
+        <sqlMapGenerator targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\resources">
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\resources">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="aptchaCode" domainObjectName="CaptchaCode" >
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="aptchaCode" domainObjectName="CaptchaCode" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="country" domainObjectName="Country" >
+            <property name="useActualColumnNames" value="false"/>
+            <!--<columnOverride column="domainId" property="domainId" />-->
+        </table>
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="province" domainObjectName="Province" >
+            <property name="useActualColumnNames" value="false"/>
+            <!--<columnOverride column="domainId" property="domainId" />-->
+        </table>
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="city" domainObjectName="City" >
+            <property name="useActualColumnNames" value="false"/>
+            <!--<columnOverride column="domainId" property="domainId" />-->
+        </table>
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="county" domainObjectName="County" >
+            <property name="useActualColumnNames" value="false"/>
+            <!--<columnOverride column="domainId" property="domainId" />-->
+        </table>
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="town" domainObjectName="Town" >
             <property name="useActualColumnNames" value="false"/>
             <!--<columnOverride column="domainId" property="domainId" />-->
         </table>
