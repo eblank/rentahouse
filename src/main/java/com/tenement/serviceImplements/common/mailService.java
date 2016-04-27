@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
-import java.security.MessageDigest;
 import java.util.Date;
 import java.util.UUID;
 
