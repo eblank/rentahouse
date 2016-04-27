@@ -28,9 +28,14 @@ public class CityListPipeline implements Pipeline {
     @Autowired
     private CityMapper cityMapper;
 
+    /**
+     * 获取省市与对应url数据
+     *
+     * @param resultItems
+     * @param task
+     */
     @Override
     public void process(ResultItems resultItems, Task task) {
-        //TODO 城市列表持久化操作
         //保存国家
         Country country = new Country();
         country.setName("中国");

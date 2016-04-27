@@ -12,7 +12,13 @@ public interface CrawlService {
      */
     boolean crawlCityList();
 
-
+    /**
+     * 获取筛选条件
+     *
+     * @param cityName
+     * @return
+     */
+    boolean crawlFilterOption(String cityName);
 
 
 }

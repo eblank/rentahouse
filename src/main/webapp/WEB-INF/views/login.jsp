@@ -16,7 +16,6 @@ To change this template use File | Settings | File Templates.
 <head>
     <meta charset="utf-8" />
     <title>登录界面</title>
-    <meta name="keywords" content="Bootstrap,登录界面,管理系统" />
     <meta name="description" content="登录界面" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
