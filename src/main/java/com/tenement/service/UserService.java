@@ -49,5 +49,5 @@ public interface UserService {
      * @param validataCode
      * @return
      */
-    CaptchaCode changePassword(String password, String passwordagain, String validataCode) throws Exception;
+    boolean changePassword(String password, String passwordagain, String validataCode);
 }

@@ -134,10 +134,11 @@ public class HomeController {
     }
 
     /**
-     * 修改密码aaa
+     * 修改密码
      *
      * @param password
      * @param passwordagain
+     * @param validataCode
      * @return
      */
     @RequestMapping(value="/password/change", method = RequestMethod.POST)
@@ -147,8 +148,8 @@ public class HomeController {
                                  @RequestParam("sid") String validataCode) {
         Result result = new Result();
         try {
-            CaptchaCode captchaCode = userService.changePassword(password, passwordagain, validataCode);
-            if (StringUtils.isNotBlank(captchaCode.getUserAccount())) {
+            boolean success = userService.changePassword(password, passwordagain, validataCode);
+            if (success) {
 //                JSONObject accountInfo = new JSONObject();
 //                accountInfo.put("account", captchaCode.getUserAccount());
 //                accountInfo.put("password", password);
