@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tenement.common.util.Result;
 import com.tenement.mapper.UserMapper;
 import com.tenement.service.UserService;
-import com.tenement.serviceImplements.common.mailService;
+import com.tenement.service.serviceImplements.common.mailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

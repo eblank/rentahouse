@@ -1,7 +1,6 @@
-package com.tenement.serviceImplements;
+package com.tenement.service.serviceImplements;
 
 import com.tenement.common.util.ClassUtil;
-import com.tenement.manager.CaptchaCodeManager;
 import com.tenement.mapper.CaptchaCodeMapper;
 import com.tenement.mapper.UserMapper;
 import com.tenement.model.CaptchaCode;
