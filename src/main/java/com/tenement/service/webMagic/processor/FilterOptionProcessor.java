@@ -2,12 +2,9 @@ package com.tenement.service.webMagic.processor;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.tenement.mapper.CityMapper;
-import com.tenement.model.City;
-import com.tenement.model.CityExample;
 import com.tenement.model.Town;
 import com.tenement.service.webMagic.pipeline.ConsolePipeline;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -22,10 +19,6 @@ import java.util.List;
  */
 @Service
 public class FilterOptionProcessor implements PageProcessor {
-    @Autowired
-    private CityMapper cityMapper;
-    private static Long cityCode;
-    private static boolean hadCityCode = false;
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
     /**
      * get the site settings
@@ -75,6 +68,10 @@ public class FilterOptionProcessor implements PageProcessor {
         String countyUrl = htmlPage
                 .xpath("//a[@para='local' and @class='select']/@href")
                 .get();
+        if (StringUtils.isNotBlank(countyUrl)) {
+            String[] url = countyUrl.split("/");
+            countyUrl = url[3];
+        }
         List<String> townList = htmlPage
                 .xpath("//div[@class='arealist']/a/@href|//div[@class='arealist']/a/text()")
                 .all();
@@ -86,6 +83,9 @@ public class FilterOptionProcessor implements PageProcessor {
             String townUrl = townList.get(j);
             String townName = townList.get(j + size);
             Town town = new Town();
+            if (StringUtils.isNotBlank(townUrl)) {
+                townUrl = townUrl.split("/")[3];
+            }
             town.setName(townUrl);
             town.setUrl(townName);
             townArray.add(town);
@@ -103,7 +103,6 @@ public class FilterOptionProcessor implements PageProcessor {
         Spider.create(new FilterOptionProcessor())
                 .addUrl("http://nb.58.com/chuzu/?PGTID=0d3090a7-0008-ac1a-3a00-5e9f760b3e82&ClickID=1")
                 .addPipeline(new ConsolePipeline())
-                .thread(1)
                 .run();
 
     }

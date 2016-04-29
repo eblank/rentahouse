@@ -23,10 +23,6 @@ import java.util.List;
 @Service
 public class FilterOptionPipeline implements Pipeline {
     @Autowired
-    private CountryMapper countryMapper;
-    @Autowired
-    private ProvinceMapper provinceMapper;
-    @Autowired
     private CityMapper cityMapper;
     @Autowired
     private CountyMapper countyMapper;
@@ -41,8 +37,8 @@ public class FilterOptionPipeline implements Pipeline {
      */
     @Override
     public void process(ResultItems resultItems, Task task) {
-        JSONObject cityJson = (JSONObject)JSONObject.toJSON(resultItems.getAll());
-        String cityName = cityJson.get("city").toString();
+        JSONObject cityJson = (JSONObject)JSONObject.toJSON(resultItems.getAll().get("city"));
+        String cityName = cityJson.get("name").toString();
         //获取市id
         CityExample cityExample = new CityExample();
         cityExample.createCriteria().andNameEqualTo(cityName);
@@ -59,7 +55,7 @@ public class FilterOptionPipeline implements Pipeline {
         County county = new County();
         county.setName(countyName);
         county.setUrl(countyUrl);
-        county.setCode(cityCode);
+        county.setCityCode(cityCode);
         ClassUtil.setDefaultValues(county);
         try {
             countyMapper.insert(county);
@@ -74,11 +70,8 @@ public class FilterOptionPipeline implements Pipeline {
             return;
         }
         for (Object o : townArray) {
-            JSONObject townJson = (JSONObject)o;
-            Town town = new Town();
-            town.setName(townJson.getString("name"));
-            town.setUrl(townJson.getString("url"));
-            town.setCode(countyCode);
+            Town town = (Town)o;
+            town.setCountyCode(countyCode);
             ClassUtil.setDefaultValues(town);
             try {
                 townMapper.insert(town);
