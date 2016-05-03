@@ -41,26 +41,34 @@
             <!--<property name="useActualColumnNames" value="false"/>-->
             <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
         <!--</table>-->
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="country" domainObjectName="Country" >
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="country" domainObjectName="Country" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="province" domainObjectName="Province" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="city" domainObjectName="City" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="county" domainObjectName="County" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="town" domainObjectName="Town" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="house" domainObjectName="House" >
             <property name="useActualColumnNames" value="false"/>
             <!--<columnOverride column="domainId" property="domainId" />-->
         </table>
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="province" domainObjectName="Province" >
-            <property name="useActualColumnNames" value="false"/>
-            <!--<columnOverride column="domainId" property="domainId" />-->
-        </table>
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="city" domainObjectName="City" >
-            <property name="useActualColumnNames" value="false"/>
-            <!--<columnOverride column="domainId" property="domainId" />-->
-        </table>
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="county" domainObjectName="County" >
-            <property name="useActualColumnNames" value="false"/>
-            <!--<columnOverride column="domainId" property="domainId" />-->
-        </table>
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="town" domainObjectName="Town" >
-            <property name="useActualColumnNames" value="false"/>
-            <!--<columnOverride column="domainId" property="domainId" />-->
-        </table>
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="landlord" domainObjectName="Landlord" >-->
+            <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>
 

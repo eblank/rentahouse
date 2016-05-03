@@ -160,22 +160,21 @@ public class CrawlServiceImpl implements CrawlService {
         if (StringUtils.isNotBlank(rentType)) {
             accumUrl.append("/").append(rentType);
         } else {
-            accumUrl.append("/").append("chuzu");
+            accumUrl.append("/").append("zufang");
         }
+        accumUrl.append("/").append(1);
         accumUrl.append("/").append(price).append(toward).append(decoration).append(roomNumber);
         return accumUrl.toString();
     }
 
     /**
-     * 抓取房屋信息
+     * 抓取房屋详细信息
      *
      * @param url
      * @return
      */
     @Override
     public Result crawlHouseInfo(String url) {
-        //todo HouseInfoProcessor
-        //todo HouseInfoPipeline
         Spider spider = Spider.create(houseInfoProcessor);
         spider.addUrl(url)
                 .addPipeline(houseInfoPipeline)

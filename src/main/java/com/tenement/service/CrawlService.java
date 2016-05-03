@@ -36,7 +36,7 @@ public interface CrawlService {
     String getUrl(String location, String price, String roomNumber, String rentType, String toward, String decoration);
 
     /**
-     * 抓取房屋信息
+     * 抓取房屋详细信息
      *
      * @param url
      * @return

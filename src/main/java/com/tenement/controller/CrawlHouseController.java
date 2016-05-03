@@ -18,6 +18,12 @@ public class CrawlHouseController {
     @Autowired
     private CrawlService crawlService;
 
+    /**
+     * 获取筛选区域数据
+     *
+     * @param city 城市名
+     * @return
+     */
     @RequestMapping(value = "/areaOptions" , method = RequestMethod.GET)
     @ResponseBody
     public Result crawlFilterOption(@RequestParam(required = false, defaultValue = "宁波") String city) {
@@ -27,14 +33,14 @@ public class CrawlHouseController {
 
     @RequestMapping(value = "/house/info", method = RequestMethod.GET)
     @ResponseBody
-    public Result crawlHouseInfo(@RequestParam(required = false, defaultValue = "宁波") String location,
-                                 @RequestParam(required = false) String price,
-                                 @RequestParam(required = false) String roomNumber,
-                                 @RequestParam(required = false) String rentType,
-                                 @RequestParam(required = false) String toward,
-                                 @RequestParam(required = false) String decoration) {
+    public Result crawlHouseInfo(@RequestParam(required = false, defaultValue = "") String location,
+                                 @RequestParam(required = false, defaultValue = "") String price,
+                                 @RequestParam(required = false, defaultValue = "") String roomNumber,
+                                 @RequestParam(required = false, defaultValue = "") String rentType,
+                                 @RequestParam(required = false, defaultValue = "") String toward,
+                                 @RequestParam(required = false, defaultValue = "") String decoration) {
         String urlString = crawlService.getUrl(location, price, roomNumber, rentType, toward, decoration);
-
+        crawlService.crawlHouseInfo(urlString);
         return null;
 
 
