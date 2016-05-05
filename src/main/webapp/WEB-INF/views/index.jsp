@@ -53,7 +53,7 @@
       <ul class="nav ace-nav">
         <li class="light-blue">
           <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-            <img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
+            <img class="nav-user-photo" src="../../assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>欢迎光临,</small>
 									Jason
@@ -500,7 +500,7 @@
 <!--[if !IE]> -->
 
 <script type="text/javascript">
-  window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");
+  window.jQuery || document.write("<script src='../../assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");
 </script>
 
 <!-- <![endif]-->
@@ -512,10 +512,10 @@
 <![endif]-->
 
 <script type="text/javascript">
-  if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+  if("ontouchend" in document) document.write("<script src='../../assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
 </script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/typeahead-bs2.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
+<script src="../../assets/js/typeahead-bs2.min.js"></script>
 
 <!-- page specific plugin scripts -->
 

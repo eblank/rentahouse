@@ -86,8 +86,8 @@ public class FilterOptionProcessor implements PageProcessor {
             if (StringUtils.isNotBlank(townUrl)) {
                 townUrl = townUrl.split("/")[3];
             }
-            town.setName(townUrl);
-            town.setUrl(townName);
+            town.setName(townName);
+            town.setUrl(townUrl);
             townArray.add(town);
         }
         countyJson.put("name", county);

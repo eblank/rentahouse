@@ -2,7 +2,6 @@ package com.tenement.service.webMagic.processor;
 
 import com.tenement.model.House;
 import com.tenement.model.Landlord;
-import com.tenement.service.webMagic.pipeline.ConsolePipeline;
 import com.tenement.service.webMagic.pipeline.HouseInfoPipeline;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;

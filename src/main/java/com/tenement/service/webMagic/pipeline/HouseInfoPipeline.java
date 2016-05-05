@@ -43,9 +43,8 @@ public class HouseInfoPipeline implements Pipeline {
 
         House house = (House)items.get("house");
         house.setContact(landlord.getId());
-        //todo 表town 字段错误 name和url错误
         TownExample townExample = new TownExample();
-        townExample.createCriteria().andUrlEqualTo(house.getTown());
+        townExample.createCriteria().andNameEqualTo(house.getTown());
         Town town = townMapper.selectByExample(townExample).get(0);
         //县级
         County county = countyMapper.selectByPrimaryKey(Long.parseLong(town.getCountyCode()));

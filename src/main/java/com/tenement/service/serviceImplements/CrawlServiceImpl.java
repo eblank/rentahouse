@@ -3,10 +3,11 @@ package com.tenement.service.serviceImplements;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tenement.common.util.Result;
-import com.tenement.mapper.CityMapper;
-import com.tenement.mapper.CountyMapper;
-import com.tenement.mapper.TownMapper;
+import com.tenement.mapper.*;
 import com.tenement.model.*;
+import com.tenement.model.constant.QueryDecorationEnum;
+import com.tenement.model.constant.QueryRoomNumberEnum;
+import com.tenement.model.constant.QueryTowardEnum;
 import com.tenement.service.CrawlService;
 import com.tenement.service.webMagic.pipeline.CityListPipeline;
 import com.tenement.service.webMagic.pipeline.FilterOptionPipeline;
@@ -46,11 +47,15 @@ public class CrawlServiceImpl implements CrawlService {
     private CountyMapper countyMapper;
     @Autowired
     private TownMapper townMapper;
+    @Autowired
+    private HouseMapper houseMapper;
+    @Autowired
+    private LandlordMapper landlordMapper;
 
     /**
      * 抓取城市列表
-     *
-//     * @param url http://www.58.com/chuzu/changecity/?PGTID=0d3090a7-029c-40b0-8319-2473d96e2e12&ClickID=1
+     * <p/>
+     * //     * @param url http://www.58.com/chuzu/changecity/?PGTID=0d3090a7-029c-40b0-8319-2473d96e2e12&ClickID=1
      */
     @Override
     public boolean crawlCityList() {
@@ -60,7 +65,7 @@ public class CrawlServiceImpl implements CrawlService {
                 .addPipeline(cityListPipeline)
                 .thread(1)
                 .run();
-            spider.getStatus();
+        spider.getStatus();
         return true;
     }
 
@@ -96,7 +101,6 @@ public class CrawlServiceImpl implements CrawlService {
             spider.getStatus();
         }
 
-        JSONObject queryLocal = new JSONObject();
         JSONArray countyArray = new JSONArray();
         if (countyList.size() < 1) {
             countyList = countyMapper.selectByExample(countyExample);
@@ -104,7 +108,7 @@ public class CrawlServiceImpl implements CrawlService {
         for (County county : countyList) {
             JSONObject countyJson = new JSONObject();
             countyJson.put("text", county.getName());
-            countyJson.put("value", county.getUrl());
+            countyJson.put("value", county.getName());
 
             String countyCode = county.getId() + "";
             TownExample townExample = new TownExample();
@@ -116,16 +120,15 @@ public class CrawlServiceImpl implements CrawlService {
                 for (Town town : townList) {
                     JSONObject townObject = new JSONObject();
                     townObject.put("text", town.getName());
-                    townObject.put("value", town.getUrl());
+                    townObject.put("value", town.getName());
                     townArray.add(townObject);
                 }
                 countyJson.put("options", townArray);
             }
             countyArray.add(countyJson);
         }
-        queryLocal.put("queryLocal", countyArray);
 
-        result.setData(queryLocal);
+        result.setData(countyArray);
         return result;
     }
 
@@ -147,7 +150,7 @@ public class CrawlServiceImpl implements CrawlService {
         String host = "";
         String file = "";
         try {
-        URL url = new URL(urlString);
+            URL url = new URL(urlString);
             host = url.getHost();
             file = url.getFile();
         } catch (MalformedURLException e) {
@@ -163,7 +166,12 @@ public class CrawlServiceImpl implements CrawlService {
             accumUrl.append("/").append("zufang");
         }
         accumUrl.append("/").append(1);
-        accumUrl.append("/").append(price).append(toward).append(decoration).append(roomNumber);
+        if (StringUtils.isNotBlank(toward) | StringUtils.isNotBlank(decoration) | StringUtils.isNotBlank(roomNumber)) {
+            accumUrl.append("/").append(toward).append(decoration).append(roomNumber);
+        }
+        if (StringUtils.isNotBlank(price)) {
+            accumUrl.append("?minprice=").append(price);
+        }
         return accumUrl.toString();
     }
 
@@ -174,19 +182,71 @@ public class CrawlServiceImpl implements CrawlService {
      * @return
      */
     @Override
-    public Result crawlHouseInfo(String url) {
+    public void crawlHouseInfo(String url) {
         Spider spider = Spider.create(houseInfoProcessor);
         spider.addUrl(url)
                 .addPipeline(houseInfoPipeline)
                 .thread(1)
                 .run();
-
-        return null;
     }
 
     public static void main(String[] args) {
         CrawlServiceImpl crawlService = new CrawlServiceImpl();
         String url = crawlService.getUrl("", "", "", "", "", "");
         System.out.println(url);
+    }
+
+    /**
+     * 获取房屋信息
+     *
+     * @param location   区域
+     * @param price      租金
+     * @param roomNumber 卧室数
+     * @param rentType   租金
+     * @param toward     朝向
+     * @param decoration 装修程度
+     * @return
+     */
+    @Override
+    public List getHouseInfo(String location, String price, String roomNumber, String rentType, String toward, String decoration) {
+        Result result = new Result();
+        HouseExample houseExample = new HouseExample();
+        HouseExample.Criteria criteria = houseExample.createCriteria();
+
+        if (StringUtils.isNotBlank(location)) {
+            criteria.andTownEqualTo(location);
+        }
+        if (StringUtils.isNotBlank(roomNumber)) {
+            int bedroomNumber = QueryRoomNumberEnum.valueOf(roomNumber).getValue();
+            if (bedroomNumber >= 5) {
+                criteria.andBedRoomGreaterThanOrEqualTo(bedroomNumber);
+            } else {
+                criteria.andBedRoomEqualTo(bedroomNumber);
+            }
+        }
+        if (StringUtils.isNotBlank(price)) {
+            int minPrice = Integer.parseInt(price.split("_")[0]);
+            String maxPriceString = price.split("_")[1];
+            if ("*".equals(maxPriceString)) {
+                criteria.andHousePriceGreaterThan(minPrice);
+            } else {
+                criteria.andHousePriceBetween(minPrice, Integer.parseInt(maxPriceString));
+            }
+        }
+        if (StringUtils.isNotBlank(toward)) {
+            toward = QueryTowardEnum.valueOf(toward).getValue();
+            criteria.andTowardEqualTo(toward);
+        }
+        if (StringUtils.isNotBlank(decoration)) {
+            decoration = QueryDecorationEnum.valueOf(decoration).getValue();
+            criteria.andDecorationEqualTo(decoration);
+        }
+        if (StringUtils.isNotBlank(rentType)) {
+
+        }
+
+        List<House> houseList = houseMapper.selectByExample(houseExample);
+
+        return houseList;
     }
 }

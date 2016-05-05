@@ -7,35 +7,6 @@ var BJDATA = {
     },
     "activeOption": {
     },
-    //位置
-    "queryLocat": [
-        {
-            "text": "镇海",
-            "value": "zhenhai",
-            "options": [
-                {
-                    "text": "蛟川",
-                    "value": "jiaochuan"
-                },
-                {
-                    "text": "骆驼",
-                    "value": "116.396976,39.915591"
-                },
-                {
-                    "text": "庄市",
-                    "value": "zhuangshi1"
-                },
-                {
-                    "text": "招宝山",
-                    "value": "zhaobaoshan"
-                },
-                {
-                    "text": "镇海周边",
-                    "value": "zhenhaiqu"
-                }
-            ]
-        }
-    ],
     //卧室数
     "queryRoomNumber" : [
         {
@@ -63,35 +34,35 @@ var BJDATA = {
     "queryPrice" : [
         {
             "text": "不限",
-            "value": "R0"
+            "value": ""
         },
         {
             "text" : "500以下",
-            "value": "b1"
+            "value": "0_500"
         },
         {
             "text" : "500-1000",
-            "value" : "b2"
+            "value" : "500_1000"
         },
         {
             "text" : "1000-1500",
-            "value" : "b3"
+            "value" : "1000_1500"
         },
         {
             "text" : "1500-2000",
-            "value" : "b4"
+            "value" : "1500_2000"
         },
         {
             "text" : "2000-3000",
-            "value" : "b5"
+            "value" : "2000_3000"
         },
         {
             "text" : "3000-4500",
-            "value" : "b6"
+            "value" : "3000_4500"
         },
         {
             "text" : "4500以上",
-            "value" : "b7"
+            "value" : "4500_*"
         },
         {
             "text": "custom",

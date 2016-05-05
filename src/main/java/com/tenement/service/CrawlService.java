@@ -2,6 +2,8 @@ package com.tenement.service;
 
 import com.tenement.common.util.Result;
 
+import java.util.List;
+
 /**
  * Created by LXPENG on 2016/4/27.
  */
@@ -41,5 +43,18 @@ public interface CrawlService {
      * @param url
      * @return
      */
-    Result crawlHouseInfo(String url);
+    void crawlHouseInfo(String url);
+
+    /**
+     * 获取房屋信息
+     *
+     * @param location
+     * @param price
+     * @param roomNumber
+     * @param rentType
+     * @param toward
+     * @param decoration
+     * @return
+     */
+    List getHouseInfo(String location, String price, String roomNumber, String rentType, String toward, String decoration);
 }

@@ -270,7 +270,7 @@ return S.augment(HotelFilter, Event.Target, {
         var id    = cfg.id;
         var type  = cfg.type;
         var title = cfg.title;
-        var data  = self.data.queryLocat;
+        var data  = self.data.queryLocal;
         var query = self.data.query;
 
         if (!self._checkData(data)) {

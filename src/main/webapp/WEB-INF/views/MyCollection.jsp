@@ -6,10 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-  String path = request.getContextPath();
-  String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,16 +22,16 @@
 
   <!--start Bootstrap-Table-->
   <div id="toolbar" class="btn-group">
-    <button id="btnAdd" type="button" class="btn btn-default">
+    <button type="btnAdd" class="btn btn-default">
       <i class="glyphicon glyphicon-plus"></i>
     </button>
-    <button id="btnCol" type="button" class="btn btn-default">
+    <button type="btnCol" class="btn btn-default">
       <i class="glyphicon glyphicon-heart"></i>
     </button>
     <button id="btnDel" type="button" class="btn btn-default">
       <i class="glyphicon glyphicon-trash"></i>
     </button>
-    <button id="btnImport" type="button" class="btn btn-default">
+    <button id="btnSearch" type="button" class="btn btn-default">
       收集
     </button>
   </div>
@@ -68,7 +64,7 @@
       <th class="col-md" data-field="furniture" data-sortable="true" data-editable="true">家具</th>
       <th class="col-md" data-field="description" data-sortable="true" data-editable="true">描述</th>
       <th class="col-md" data-field="contact" data-sortable="true" data-editable="true">联系人</th>
-      <th class="operation" data-formatter="op_formatter">操作</th>
+      <th data-formatter="op_formatter">操作</th>
     </tr>
     </thead>
   </table>
@@ -111,8 +107,6 @@
 <script src="/assets/js/bootstrap-table.js"></script>
 <script src="/assets/js/localization/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript">
-
-  //获取地域数据
   var queryLocal = JSON.parse(JSON.stringify(${queryLocal}));
   BJDATA.queryLocal=queryLocal;
   //    start 筛选
@@ -141,73 +135,121 @@
       }
     ]
   });
+  //end 筛选
 
   S.use('rentalHouse/index', function (S, HotelFilter) {
     new HotelFilter('#demo', BJDATA);
   });
-  //end 筛选
 
-  //选择节点
+//  $('#table').bootstrapTable({
+//    data: [{
+//      id: 1,
+//      name: '个人-骆驼 三江超市对面骆兴家园二期车棚出租(三江超市旁。骆兴西路)',
+//      price: '250',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 2,
+//      name: '镇海镇海村 1室1厅 46平米 中等装修 押一付一(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 3,
+//      name: '镇海庄市芳晨丽阳 中等装修 面议(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 4,
+//      name: '镇海庄市芳晨丽阳 中等装修 面议(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 5,
+//      name: '镇海庄市光明新村 1室1厅 48平米 精装修 押一付一',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 6,
+//      name: '镇海庄市柳岸柳韵 1室1厅 15平米 简单装修 押一付三',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 7,
+//      name: '镇海庄市逸夫小学后面 2室 40平米 简单装修 年付(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 6,
+//      name: '镇海庄市柳岸柳韵 1室1厅 15平米 简单装修 押一付三',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 7,
+//      name: '镇海庄市逸夫小学后面 2室 40平米 简单装修 年付(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 6,
+//      name: '镇海庄市柳岸柳韵 1室1厅 15平米 简单装修 押一付三',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 7,
+//      name: '镇海庄市逸夫小学后面 2室 40平米 简单装修 年付(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 6,
+//      name: '镇海庄市柳岸柳韵 1室1厅 15平米 简单装修 押一付三',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }, {
+//      id: 7,
+//      name: '镇海庄市逸夫小学后面 2室 40平米 简单装修 年付(个人)',
+//      price: '500',
+//      roomNumber: '1',
+//      toward: '南'
+//    }]
+//  });
+
   var $table = $('#table'),
-          $add = $('#btnAdd'),
-          $col = $('#btnCol'),
-          $del = $('#btnDel'),
-          $import = $('#btnImport'),
-          $collect = $('.collect');
-
-  //table本地化
-  $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
+          $button = $('#btnDel'),
+          $search = $('#btnSearch');
 
 
   $(function () {
-    //添加按钮
-    $add.click(function () {
-      var allSelectRows = getAllSelectedRow();
-      alert(JSON.stringify(allSelectRows));
+    //删除按钮
+    $button.click(function () {
+      alert('getSelections: ' + getSelectedRow());
     });
-    //多个收藏按钮
-    $col.click(function () {
-      var collectIdArray = [];
-      //获取选中的房屋信息id
-      var allSelectRows = getAllSelectedRow();
-      $.each(allSelectRows, function (i, n) {
-        collectIdArray.push(n.id);
+
+    function getSelectedRow() {
+      var selectedRows = $table.bootstrapTable('getSelections');
+      console.log(JSON.stringify(selectedRows))
+      $.each(selectedRows, function (i, n) {
+        alert('id = ' + n.id);
       });
-      var param = {"houseIdListString" : JSON.stringify(collectIdArray)};
-      param.userId = 23;
-      alert('收藏一条信息参数：' + JSON.stringify(param));
-      var url = "<%=basePath%>collection/collectHouse";
-      collectHouse(url, param);
-    });
-    //多个删除按钮
-    $del.click(function () {
-      var collectIdArray = [];
-      //获取选中的房屋信息id
-      var allSelectRows = getAllSelectedRow();
-      $.each(allSelectRows, function (i, n) {
-        collectIdArray.push(n.id);
-      });
-      var param = {"houseIdListString": JSON.stringify(collectIdArray)};
-      alert('删除多条信息参数：' + JSON.stringify(param));
-      var url = "<%=basePath%>crawl/houseInfo/delete";
-      if (param.houseIdListString == '[]') {
-        alert("请选中信息");
-      } else {
-        collectHouse(url, param);
-      }
-    });
-    //导入信息按钮
-    $import.click(function () {
-      var queryList = $('#J_FilterQueryList i');
+    }
+
+    //搜索
+    $search.click(function () {
       var param = {};
-      $.each(queryList, function () {
-        var key = this.attributes.getNamedItem("data-type").value,
-                value = this.attributes.getNamedItem("data-value").value;
-        param[key] = value;
-      });
-      var url = "http://localhost:8080/crawl/house/info";
+      param["userId"] = 1;
+
+      var url = "http://localhost:8080/collection/houseList";
       $.ajax({
-        type : "GET",
+        type : "POST",
         url : url,
         data : param,
         success : function(result) {
@@ -217,23 +259,6 @@
             pagination: true
           });
 
-          //start 收藏按钮
-          $(document).on('click', '.collect', function () {
-            $('tr').removeClass('selected');
-            $('.bs-checkbox input').attr("checked",false);
-
-            var nowSelected = $(this).parent('td').parent('tr');
-            nowSelected.addClass('selected');
-            nowSelected.children('.bs-checkbox').children('input').attr("checked",true);
-            var collectIdArray = [];
-            collectIdArray.push(getSelectedRow().id);
-            var param = {"houseIdListString" : JSON.stringify(collectIdArray)};
-            param.userId = 23;
-            alert('收藏一条信息参数：' + JSON.stringify(param));
-            var url = "<%=basePath%>collection/collectHouse";
-            collectHouse(url, param);
-          });
-          //end 收藏按钮
         },
         error : function() {
           alert("网络异常");
@@ -243,53 +268,25 @@
     });
 
   });
-  //获取一行数据
-  function getSelectedRow() {
-    var index = $table.find('tr.selected').data('index');
-    return $table.bootstrapTable('getData')[index];
-  }
-  //获取所有选中行数据
-  function getAllSelectedRow() {
-    return $table.bootstrapTable('getAllSelections')
-  }
-  function collectHouse(url, param) {
-    $.ajax({
-      type : "POST",
-      url : url,
-      data : param,
-      success : function(result) {
-        var successful = result.successful;
-        if(successful) {
-          alert("成功");
-        } else {
-          alert(result.msg);
-        }
-      },
-      error : function() {
-        alert("网络异常");
-      }
-    });
-  }
 
-  //table 操作列
   function op_formatter(value, row) {
     var btnCom = '<button ' +
             'data-toggle="modal" ' +
             'data-target="#myModal">' +
             '评论' +
             '</button>';
-
     var btnRem = '<button ' +
-            'class="collect"' +
             'data-toggle="modal" ' +
             'data-target="#">' +
             '收藏' +
             '</button>';
 
     var btnArray = new Array();
-    btnArray.push(btnCom, btnRem);
+    btnArray.push(btnCom);
     return btnArray.join('');
   }
+
+  $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
 
 </script>
 </body>
