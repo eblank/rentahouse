@@ -9,7 +9,6 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-    out.print(basePath);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +22,7 @@
 
     <!-- basic styles -->
 
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 
     <!-- fonts -->
@@ -123,7 +122,7 @@
             submitHandler: function () {
                 alert("提交事件!");
                 var data = $('#resetPassword').serializeArray(),
-                url = "password/change",
+                        url = "<%=basePath%>password/change",
                 param = window.location.search.substr(1);
                 var keyName = param.split('=')[0];
                 var keyValue = param.split('=')[1];

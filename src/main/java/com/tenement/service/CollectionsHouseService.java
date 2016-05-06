@@ -40,12 +40,29 @@ public interface CollectionsHouseService {
     boolean collectHouseList(Long userId, List<Long> houseIdList) throws Exception;
 
     /**
-     * 备注信息
+     * 删除收藏信息
+     *
+     * @param userId
+     * @param collectionIdList
+     * @return
+     */
+    boolean cancelCollect(Long userId, List<Long> collectionIdList) throws Exception;
+
+    /**
+     * 保存备注信息
      *
      * @param userHouseId
      * @param remark
      * @return
      */
     boolean remarkHouseInfo(Long userHouseId, String remark);
+
+    /**
+     * 获取收藏信息备注
+     *
+     * @param userHouseId
+     * @return
+     */
+    String getCollectionRemark(Long userHouseId) throws Exception;
 
 }

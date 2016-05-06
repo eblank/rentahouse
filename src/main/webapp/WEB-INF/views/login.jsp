@@ -9,7 +9,6 @@ To change this template use File | Settings | File Templates.
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-    out.print(basePath);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,11 +20,10 @@ To change this template use File | Settings | File Templates.
 
     <!-- basic styles -->
 
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 
     <!-- fonts -->
-
     <link rel="stylesheet" href="/assets/font/useso.css" />
 
     <!-- ace styles -->
@@ -78,15 +76,15 @@ To change this template use File | Settings | File Templates.
 														</span>
                                             </label>
 
-                                            <label id="msg"></label>
+                                            <label class="msg"></label>
 
                                             <div class="space"></div>
 
                                             <div class="clearfix">
-                                                <label class="inline">
-                                                    <input id="remember" name="remember" type="checkbox" class="ace" />
-                                                    <span class="lbl"> 记住</span>
-                                                </label>
+                                                <%--<label class="inline">--%>
+                                                <%--<input id="remember" name="remember" type="checkbox" class="ace" />--%>
+                                                <%--<span class="lbl"> 记住</span>--%>
+                                                <%--</label>--%>
 
                                                 <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="icon-key"></i>
@@ -98,23 +96,23 @@ To change this template use File | Settings | File Templates.
                                         </fieldset>
                                     </form>
 
-                                    <div class="social-or-login center">
-                                        <span class="bigger-110">Or Login Using</span>
-                                    </div>
+                                    <%--<div class="social-or-login center">--%>
+                                    <%--<span class="bigger-110">Or Login Using</span>--%>
+                                    <%--</div>--%>
 
-                                    <div class="social-login center">
-                                        <a class="btn btn-primary">
-                                            <i class="icon-facebook"></i>
-                                        </a>
+                                    <%--<div class="social-login center">--%>
+                                    <%--<a class="btn btn-primary">--%>
+                                    <%--<i class="icon-facebook"></i>--%>
+                                    <%--</a>--%>
 
-                                        <a class="btn btn-info">
-                                            <i class="icon-twitter"></i>
-                                        </a>
+                                    <%--<a class="btn btn-info">--%>
+                                    <%--<i class="icon-twitter"></i>--%>
+                                    <%--</a>--%>
 
-                                        <a class="btn btn-danger">
-                                            <i class="icon-google-plus"></i>
-                                        </a>
-                                    </div>
+                                    <%--<a class="btn btn-danger">--%>
+                                    <%--<i class="icon-google-plus"></i>--%>
+                                    <%--</a>--%>
+                                    <%--</div>--%>
                                 </div><!-- /widget-main -->
 
                                 <div class="toolbar clearfix">
@@ -157,7 +155,7 @@ To change this template use File | Settings | File Templates.
 														</span>
                                             </label>
 
-                                            <label id="msg"></label>
+                                            <label class="msg"></label>
 
                                             <div class="clearfix">
                                                 <button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
@@ -219,7 +217,7 @@ To change this template use File | Settings | File Templates.
 														</span>
                                             </label>
 
-                                            <label id="msg"></label>
+                                            <label class="msg"></label>
 
                                             <div class="clearfix">
                                                 <button type="button" class="width-30 pull-left btn btn-sm">
@@ -278,25 +276,26 @@ To change this template use File | Settings | File Templates.
         //登录
         $("#login").validate({
             submitHandler:function(){
-                $('#login-box #msg').html('');
+                $('#login-box .msg').html('');
                 alert("提交事件!");
                 var data = $('#login').serializeArray();
-                var url = "home/login";
+                var url = "<%=basePath%>home/login";
                 $.ajax({
                     type : "POST",
                     url : url,
                     data : data,
-                    success : function(data) {
-                        var successful = data.successful;
-                        var msg = data.msg;
+                    success: function (result) {
+                        var successful = result.successful;
+                        var msg = result.msg;
+                        var data = result.data;
                         if (successful) {
-                            alert("登录成功");
-                            setTimeout("window.location.href='" + "<%=basePath %>" + "home/test" + "'", 2000);
+                            alert(data.nickname + "登录成功");
+                            setTimeout("window.location.href='" + "<%=basePath %>" + "view/frameset" + "'", 2000);
 //                            $('#signup-box').removeClass('visible');
 //                            $('#login-box').addClass('visible');
                         } else {
                             alert("登录失败");
-                            $('#login-box #msg').html(msg);
+                            $('#login-box .msg').html(msg);
                             $('#login-box #password').val('');
 
                         }
@@ -324,7 +323,7 @@ To change this template use File | Settings | File Templates.
             submitHandler:function(){
                 alert("提交事件!");
                 var data = $('#register').serializeArray();
-                var url = "home/register";
+                var url = "<%=basePath%>home/register";
                 $.ajax({
                     type : "POST",
                     url : url,
@@ -338,7 +337,7 @@ To change this template use File | Settings | File Templates.
 //                            $('#login-box').addClass('visible');
                         } else {
                             alert("用户已存在");
-                            $('#signup-box #msg').html(msg);
+                            $('#signup-box .msg').html(msg);
 
                         }
                     },
@@ -374,7 +373,7 @@ To change this template use File | Settings | File Templates.
             submitHandler:function(){
                 alert("提交事件!");
                 var data = $('#forgot').serializeArray();
-                var url = "home/forgot";
+                var url = "<%=basePath%>home/forgot";
                 $.ajax({
                     type : "POST",
                     url : url,
@@ -388,7 +387,7 @@ To change this template use File | Settings | File Templates.
 //                            $('#login-box').addClass('visible');
                         } else {
                             alert("失败");
-                            $('#forgot-box #msg').html(msg);
+                            $('#forgot-box .msg').html(msg);
 
                         }
                     },

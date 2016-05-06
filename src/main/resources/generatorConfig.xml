@@ -69,10 +69,15 @@
             <!--<property name="useActualColumnNames" value="false"/>-->
             <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
         <!--</table>-->
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="user_house" domainObjectName="UserHouse" >
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="user_house" domainObjectName="UserHouse" >-->
+        <!--<property name="useActualColumnNames" value="false"/>-->
+        <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="comment" domainObjectName="Comment">
             <property name="useActualColumnNames" value="false"/>
             <!--<columnOverride column="domainId" property="domainId" />-->
         </table>
+
     </context>
 </generatorConfiguration>
 

@@ -3,6 +3,7 @@ package com.tenement.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tenement.common.util.Result;
 import com.tenement.mapper.UserMapper;
+import com.tenement.model.User;
 import com.tenement.service.UserService;
 import com.tenement.service.serviceImplements.common.mailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/home")
@@ -80,20 +84,26 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
 	public Result login(@RequestParam String account,
-                        @RequestParam String password) {
+                        @RequestParam String password,
+                        HttpServletRequest request) {
         Result result = new Result();
-        String nickname = "";
+        User user = new User();
 
         try {
-            nickname = userService.userLogin(account, password);
+            user = userService.userLogin(account, password);
         }catch (Exception e) {
             result.setSuccessful(false);
             result.setMsg(e.getMessage());
         }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("currentUser", user);
+
         JSONObject userInfo = new JSONObject();
-        userInfo.put("nickname", nickname);
-        result.setData(account);
-		return result;
+        userInfo.put("nickname", user.getNickName());
+        userInfo.put("userId", user.getId());
+        result.setData(userInfo);
+        return result;
 	}
 
     /**

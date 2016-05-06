@@ -58,8 +58,8 @@
       <th class="col-md-1" data-field="livingRoom" data-sortable="true" data-editable="true">客厅</th>
       <th class="col-md-1"data-via="false" data-field="restRoom" data-sortable="true" data-editable="true">卫生间</th>
       <th class="col-md-1" data-field="area" data-sortable="true" data-editable="true">面积</th>
-      <th class="col-md" data-field="rentFloor" data-sortable="true" data-editable="true">楼层</th>
-      <th class="col-md" data-field="floors" data-sortable="true" data-editable="true">总楼层</th>
+      <%--<th class="col-md" data-field="rentFloor" data-sortable="true" data-editable="true">楼层</th>--%>
+      <%--<th class="col-md" data-field="floors" data-sortable="true" data-editable="true">总楼层</th>--%>
       <th class="col-md" data-field="toward" data-sortable="true" data-editable="true">朝向</th>
       <th class="col-md" data-field="decoration" data-sortable="true" data-editable="true">装修程度</th>
       <th class="col-md" data-field="houseType" data-sortable="true" data-editable="true">房屋类型</th>
@@ -75,10 +75,11 @@
   <!--end Bootstrap-Table-->
 </div>
 
+<!-- 模态框（Modal） -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content-parent">
       <div class="modal-header">
         <button type="button" class="close"
                 data-dismiss="modal" aria-hidden="true">
@@ -88,8 +89,8 @@
           模态框（Modal）标题
         </h4>
       </div>
-      <div class="modal-body">
-        <textarea class="form-control" rows="5">111</textarea>
+      <div class="modal-body modal-content">
+        在这里添加一些文本
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default"
@@ -100,8 +101,9 @@
         </button>
       </div>
     </div><!-- /.modal-content -->
-  </div><!-- /.model-dialog -->
-</div><!-- /.modal -->
+  </div>
+  <!-- /.modal -->
+</div>
 
 
 <script src="http://g.tbcdn.cn/kissy/k/1.4.0/seed-min.js"></script>
@@ -234,6 +236,24 @@
             collectHouse(url, param);
           });
           //end 收藏按钮
+
+          //start 评论按钮
+          $(document).on('click', '.comment', function () {
+            $('tr').removeClass('selected');
+            $('.bs-checkbox input').attr("checked", false);
+
+            var nowSelected = $(this).parent('td').parent('tr');
+            nowSelected.addClass('selected');
+            nowSelected.children('.bs-checkbox').children('input').attr("checked", true);
+
+            var collectionId = getSelectedRow().id;
+            var param = {"collectionId": collectionId};
+            alert('收藏一条信息参数：' + JSON.stringify(param));
+            $('#myModal #myModalLabel').text(collectionId);
+            $('#myModal .modal-body.modal-content').text(JSON.stringify(getSelectedRow().name));
+            $('#myModal').modal('toggle')
+          });
+          //end 评论按钮
         },
         error : function() {
           alert("网络异常");
@@ -274,8 +294,8 @@
   //table 操作列
   function op_formatter(value, row) {
     var btnCom = '<button ' +
-            'data-toggle="modal" ' +
-            'data-target="#myModal">' +
+            'class="comment" ' +
+            '>' +
             '评论' +
             '</button>';
 
@@ -287,9 +307,14 @@
             '</button>';
 
     var btnArray = new Array();
-    btnArray.push(btnCom, btnRem);
+    btnArray.push(btnRem);
     return btnArray.join('');
   }
+  //模态框完全隐藏时触发事件
+  $("#myModal").on("hidden.bs.modal", function () {
+    //todo 事件
+    $(this).removeData("bs.modal");
+  });
 
 </script>
 </body>

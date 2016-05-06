@@ -90,4 +90,23 @@
               <!--<property name="defaultStatusCode" value="200"/>-->
        <!--</bean>-->
        <!-- 全局异常配置 end -->
+
+    <!--拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/home/**"/>
+            <mvc:exclude-mapping path="/assets/**"/>
+            <beans:bean class="com.tenement.common.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="handlerExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.tenement.common.exception.AuthorizationException">redirect:/home/page/login</prop>
+            </props>
+        </property>
+    </bean>
 </beans>

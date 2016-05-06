@@ -3,7 +3,6 @@ package com.tenement.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.tenement.common.util.Result;
 import com.tenement.service.CollectionsHouseService;
-import com.tenement.service.CrawlService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +21,11 @@ import java.util.List;
 @RequestMapping(value = "/collection")
 public class CollectionController {
     @Autowired
-    private CrawlService crawlService;
-    @Autowired
     private CollectionsHouseService collectionsHouseService;
 
 
     /**
-     * 获取收藏的数据
+     * 获取个人收藏的数据
      *
      * @param userId
      * @param location
@@ -49,9 +45,14 @@ public class CollectionController {
                                  @RequestParam(required = false, defaultValue = "") String rentType,
                                  @RequestParam(required = false, defaultValue = "") String toward,
                                  @RequestParam(required = false, defaultValue = "") String decoration) {
-        //从数据库读取数据
-        List houseList = crawlService.getHouseInfo(location, price, roomNumber, rentType, toward, decoration);
         Result result = new Result();
+        if (StringUtils.isBlank(userId)) {
+            result.setSuccessful(false);
+            result.setMsg("用户过期");
+            return result;
+        }
+        //从数据库读取数据
+        List houseList = collectionsHouseService.getUserHouseList(userId, location, price, roomNumber, rentType, toward, decoration);
         if (houseList.size() < 1) {
             result.setSuccessful(false);
             result.setMsg("没有数据");
@@ -91,15 +92,46 @@ public class CollectionController {
     }
 
     /**
-     * 备注信息
+     * 取消收藏信息
      *
-     * @param userHouseId
+     * @param userId 用户id
+     * @param collectionIdListString 收藏信息id列表 string
+     * @return
+     */
+    @RequestMapping(value = "/cancelCollect", method = RequestMethod.POST)
+    @ResponseBody
+    public Result cancelCollectHouse(@RequestParam Long userId,
+                                     @RequestParam String collectionIdListString) {
+        List<Long> collectionIdList = JSONArray.parseArray(collectionIdListString, Long.class);
+        Result result = new Result();
+        try {
+            boolean cancelResult = collectionsHouseService.cancelCollect(userId, collectionIdList);
+            if (!cancelResult) {
+                result.setSuccessful(false);
+                result.setMsg("删除失败");
+            } else {
+                result.setSuccessful(true);
+                result.setMsg("删除成功");
+            }
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMsg("删除失败");
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 保存备注信息
+     *
+     * @param collectionId
      * @param remark
      * @return
      */
     @RequestMapping(value = "/remark", method = RequestMethod.POST)
     @ResponseBody
-    public Result remarkHouseInfo(@RequestParam Long userHouseId,
+    public Result remarkHouseInfo(@RequestParam Long collectionId,
                                   @RequestParam String remark) {
         Result result = new Result();
         if (StringUtils.isBlank(remark)) {
@@ -107,7 +139,7 @@ public class CollectionController {
             result.setMsg("内容不能为空");
             return result;
         }
-        boolean remarkResult = collectionsHouseService.remarkHouseInfo(userHouseId, remark);
+        boolean remarkResult = collectionsHouseService.remarkHouseInfo(collectionId, remark);
         if (!remarkResult) {
             result.setSuccessful(false);
             result.setMsg("备注失败");
@@ -115,6 +147,29 @@ public class CollectionController {
         }
         result.setSuccessful(true);
         result.setMsg("备注成功");
+        return result;
+    }
+
+    /**
+     * 获取备注信息
+     *
+     * @param collectionId 收藏信息id
+     * @return
+     */
+    @RequestMapping(value = "/getRemark", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getCollectionRemark(@RequestParam(defaultValue = "") Long collectionId) {
+        Result result = new Result();
+        try {
+            String remark = collectionsHouseService.getCollectionRemark(collectionId);
+            result.setSuccessful(true);
+            result.setMsg("获取备注成功");
+            result.setData(remark);
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMsg(e.getMessage());
+        }
+
         return result;
     }
 }

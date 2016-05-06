@@ -1,5 +1,6 @@
 package com.tenement.common.baseController;
 
+import com.tenement.model.User;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpSession;
  * Created by LXPENG on 2016/4/27.
  */
 public class BaseController {
+    private Long userId;
+    private User user;
+
+
     protected HttpServletRequest request;
     protected HttpServletResponse response;
     protected HttpSession session;
@@ -27,5 +32,26 @@ public class BaseController {
         this.response = response;
         this.response.setCharacterEncoding("utf-8");
         this.session = request.getSession();
+    }
+
+    public void setUserInfo() {
+        this.userId = this.user.getId();
+
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

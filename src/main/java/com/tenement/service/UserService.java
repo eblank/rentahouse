@@ -1,6 +1,7 @@
 package com.tenement.service;
 
 import com.tenement.model.CaptchaCode;
+import com.tenement.model.User;
 
 /**
  * Created by LXPENG on 2016/4/27.
@@ -23,7 +24,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    String userLogin(String userAccount, String password) throws Exception;
+    User userLogin(String userAccount, String password) throws Exception;
 
     /**
      * 用户账号有效检测

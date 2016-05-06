@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
      * @return 用户昵称
      */
     @Override
-    public String userLogin(String userAccount, String password) throws Exception {
+    public User userLogin(String userAccount, String password) throws Exception {
         User user = userMapper.selectByAccount(userAccount);
         if (user == null) {
             throw new Exception("用户名错误");
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception("密码错误");
         }
 
-        return user.getNickName();
+        return user;
     }
 
     /**

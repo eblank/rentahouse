@@ -1,5 +1,8 @@
 package com.tenement.service.serviceImplements;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.tenement.common.util.ClassUtil;
 import com.tenement.mapper.HouseMapper;
 import com.tenement.mapper.UserHouseMapper;
@@ -41,6 +44,8 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
      */
     @Override
     public List getUserHouseList(String userId, String location, String price, String roomNumber, String rentType, String toward, String decoration) {
+        JSONArray collectionArray = new JSONArray();
+
         UserHouseExample userHouseExample = new UserHouseExample();
         UserHouseExample.Criteria criteria = userHouseExample.createCriteria();
         criteria.andUserIdEqualTo(Long.parseLong(userId));
@@ -49,12 +54,38 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
         List<UserHouse> userHouseList = userHouseMapper.selectByExample(userHouseExample);
         List<Long> houseIdList = new ArrayList<Long>();
         for (UserHouse userHouse : userHouseList) {
-            houseIdList.add(userHouse.getHouseId());
+            House house = getUserHouseInfo(userHouse.getHouseId(), location, price, roomNumber, rentType, toward, decoration);
+            if (house == null) {
+                continue;
+            }
+            Gson gson = new Gson();
+            String houseJsonString = gson.toJson(house);
+            JSONObject houseJsonObject = JSONObject.parseObject(houseJsonString);
+            houseJsonObject.put("id", userHouse.getId());
+            houseJsonObject.put("remark", userHouse.getRemark());
+            collectionArray.add(houseJsonObject);
         }
 
+        return collectionArray;
+    }
+
+    /**
+     * 获取一条房屋信息
+     *
+     * @param houseId    房屋信息id
+     * @param location   地域
+     * @param price      租金
+     * @param roomNumber 卧室数
+     * @param rentType   出租方式
+     * @param toward     朝向
+     * @param decoration 装修程度
+     * @return
+     */
+    public House getUserHouseInfo(Long houseId, String location, String price, String roomNumber, String rentType, String toward, String decoration) {
         HouseExample houseExample = new HouseExample();
         HouseExample.Criteria houseCriteria = houseExample.createCriteria();
 
+        houseCriteria.andIdEqualTo(houseId);
         if (StringUtils.isNotBlank(location)) {
             houseCriteria.andTownEqualTo(location);
         }
@@ -86,10 +117,12 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
         if (StringUtils.isNotBlank(rentType)) {
 
         }
-        houseCriteria.andIdIn(houseIdList);
 
         List<House> houseList = houseMapper.selectByExample(houseExample);
-        return houseList;
+        if (houseList.size() < 1) {
+            return null;
+        }
+        return houseList.get(0);
     }
 
     /**
@@ -152,6 +185,36 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
     }
 
     /**
+     * 删除收藏信息
+     *
+     * @param userId
+     * @param collectionIdList
+     * @return
+     */
+    @Override
+    public boolean cancelCollect(Long userId, List<Long> collectionIdList) throws Exception {
+        User user = userMapper.selectByPrimaryKey(userId);
+
+        if (user == null) {
+            throw new Exception("登录过期");
+        }
+        if (collectionIdList == null | collectionIdList.size() == 0) {
+            throw new Exception("没选中信息");
+        }
+
+        for (Long collectionId : collectionIdList) {
+            UserHouseExample userHouseExample = new UserHouseExample();
+            UserHouseExample.Criteria criteria = userHouseExample.createCriteria()
+                    .andUserIdEqualTo(userId)
+                    .andHouseIdEqualTo(collectionId);
+
+            int result = userHouseMapper.deleteByExample(userHouseExample);
+        }
+
+        return true;
+    }
+
+    /**
      * 备注信息
      *
      * @param userHouseId
@@ -168,5 +231,24 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
         }
 
         return true;
+    }
+
+    /**
+     * 获取收藏信息备注
+     *
+     * @param userHouseId
+     * @return
+     */
+    @Override
+    public String getCollectionRemark(Long userHouseId) throws Exception {
+        UserHouse userHouse = userHouseMapper.selectByPrimaryKey(userHouseId);
+
+        if (userHouse == null) {
+            throw new Exception("收藏的信息不存在");
+        }
+
+        String remark = userHouse.getRemark();
+
+        return remark;
     }
 }
