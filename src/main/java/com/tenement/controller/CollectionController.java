@@ -1,6 +1,7 @@
 package com.tenement.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.tenement.common.baseController.BaseController;
 import com.tenement.common.util.Result;
 import com.tenement.service.CollectionsHouseService;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/collection")
-public class CollectionController {
+public class CollectionController extends BaseController {
     @Autowired
     private CollectionsHouseService collectionsHouseService;
 

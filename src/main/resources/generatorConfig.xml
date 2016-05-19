@@ -33,7 +33,8 @@
             <property name="enableSubPackages" value="false" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"  targetProject="F:\MyProject\tenement\src\main\java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.tenement.mapper"
+                             targetProject="F:\MyProject\tenement\src\main\java\">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
@@ -73,7 +74,11 @@
         <!--<property name="useActualColumnNames" value="false"/>-->
         <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
         <!--</table>-->
-        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="comment" domainObjectName="Comment">
+        <!--<table schema="DB2ADMIN" delimitIdentifiers="true" tableName="comment" domainObjectName="Comment">-->
+        <!--<property name="useActualColumnNames" value="false"/>-->
+        <!--&lt;!&ndash;<columnOverride column="domainId" property="domainId" />&ndash;&gt;-->
+        <!--</table>-->
+        <table schema="DB2ADMIN" delimitIdentifiers="true" tableName="url" domainObjectName="Url">
             <property name="useActualColumnNames" value="false"/>
             <!--<columnOverride column="domainId" property="domainId" />-->
         </table>

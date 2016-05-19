@@ -1,3 +1,4 @@
+<%@ page import="com.tenement.model.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: LXPENG
@@ -9,6 +10,8 @@
 <%
   String path = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+  User user = (User) session.getAttribute("currentUser");
+  Long userId = user.getId();
 %>
 <!DOCTYPE html>
 <html>
@@ -176,7 +179,7 @@
         collectIdArray.push(n.id);
       });
       var param = {"houseIdListString" : JSON.stringify(collectIdArray)};
-      param.userId = 23;
+      param.userId = <%=userId%>;
       alert('收藏一条信息参数：' + JSON.stringify(param));
       var url = "<%=basePath%>collection/collectHouse";
       collectHouse(url, param);
@@ -230,7 +233,7 @@
             var collectIdArray = [];
             collectIdArray.push(getSelectedRow().id);
             var param = {"houseIdListString" : JSON.stringify(collectIdArray)};
-            param.userId = 23;
+            param.userId = <%=userId%>;
             alert('收藏一条信息参数：' + JSON.stringify(param));
             var url = "<%=basePath%>collection/collectHouse";
             collectHouse(url, param);

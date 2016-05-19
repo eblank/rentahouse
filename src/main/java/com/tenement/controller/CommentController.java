@@ -1,6 +1,7 @@
 package com.tenement.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.tenement.common.baseController.BaseController;
 import com.tenement.common.util.Result;
 import com.tenement.service.CommentService;
 import org.apache.commons.lang.StringUtils;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "/comment")
-public class CommentController {
+public class CommentController extends BaseController {
     private static final String COMMENT = "comment";
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.tenement.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.tenement.common.baseController.BaseController;
 import com.tenement.common.util.Result;
 import com.tenement.model.User;
 import com.tenement.service.CollectionsHouseService;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/crawl")
-public class CrawlHouseController {
+public class CrawlHouseController extends BaseController {
     private static final String LIST = "crawlHouseInfo";
 
     @Autowired
@@ -95,10 +96,13 @@ public class CrawlHouseController {
                                  @RequestParam(required = false, defaultValue = "") String decoration) {
         //获取对应的URL
         String urlString = crawlService.getUrl(location, price, roomNumber, rentType, toward, decoration);
-        //抓取数据
-//        crawlService.crawlHouseInfo(urlString);
         //从数据库读取数据
         List houseList = crawlService.getHouseInfo(location, price, roomNumber, rentType, toward, decoration);
+        if (houseList.size() == 0) {
+            //抓取数据
+            crawlService.crawlHouseInfo(urlString);
+        }
+        houseList = crawlService.getHouseInfo(location, price, roomNumber, rentType, toward, decoration);
         Result result = new Result();
         if (houseList.size() < 1) {
             result.setSuccessful(false);

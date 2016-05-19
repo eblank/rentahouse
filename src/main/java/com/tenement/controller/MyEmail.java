@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
  * Created by LXPENG on 2016/4/24.
  */
 @Service
-public class MyEmail{
+public class MyEmail {
     @Resource(name = "mailSender")
     JavaMailSenderImpl mailSender;
 

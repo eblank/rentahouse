@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.tenement.common.util.ClassUtil;
 import com.tenement.mapper.HouseMapper;
+import com.tenement.mapper.LandlordMapper;
 import com.tenement.mapper.UserHouseMapper;
 import com.tenement.mapper.UserMapper;
 import com.tenement.model.*;
@@ -30,6 +31,8 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
     private HouseMapper houseMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private LandlordMapper landlordMapper;
     /**
      * 获取个人收藏信息
      *
@@ -63,6 +66,9 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
             JSONObject houseJsonObject = JSONObject.parseObject(houseJsonString);
             houseJsonObject.put("id", userHouse.getId());
             houseJsonObject.put("remark", userHouse.getRemark());
+
+            Landlord landlord = landlordMapper.selectByPrimaryKey(house.getContact());
+            houseJsonObject.put("contact", landlord.getMobile());
             collectionArray.add(houseJsonObject);
         }
 
@@ -206,7 +212,7 @@ public class CollectionsHouseServiceImpl implements CollectionsHouseService {
             UserHouseExample userHouseExample = new UserHouseExample();
             UserHouseExample.Criteria criteria = userHouseExample.createCriteria()
                     .andUserIdEqualTo(userId)
-                    .andHouseIdEqualTo(collectionId);
+                    .andIdEqualTo(collectionId);
 
             int result = userHouseMapper.deleteByExample(userHouseExample);
         }

@@ -1,3 +1,4 @@
+<%@ page import="com.tenement.model.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: LXPENG
@@ -9,6 +10,8 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    User user = (User) session.getAttribute("currentUser");
+    Long userId = user.getId();
 %>
 <!DOCTYPE html>
 <html>
@@ -118,7 +121,7 @@
 <script src="/assets/js/localization/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript">
     var queryLocal = JSON.parse(JSON.stringify(${queryLocal}));
-    BJDATA.queryLocal = queryLocal;
+    COLLECTIONDATA.queryLocal = queryLocal;
     //    start 筛选
     var S = KISSY;
     if (S.Config.debug) {
@@ -148,7 +151,7 @@
     //end 筛选
 
     S.use('rentalHouse/index', function (S, HotelFilter) {
-        new HotelFilter('#demo', BJDATA);
+        new HotelFilter('#demo', COLLECTIONDATA);
     });
 
     //选择节点
@@ -174,12 +177,14 @@
             $.each(allSelectRows, function (i, n) {
                 collectIdArray.push(n.id);
             });
-            var param = {"houseIdListString": JSON.stringify(collectIdArray)};
+            var param = {"collectionIdListString": JSON.stringify(collectIdArray)};
             alert('删除多条信息参数：' + JSON.stringify(param));
-            var url = "<%=basePath%>crawl/houseInfo/delete";
+            var url = "<%=basePath%>collection/cancelCollect";
             if (param.houseIdListString == '[]') {
                 alert("请选中信息");
             } else {
+                param.userId =<%=userId%>;
+                collectHouse(url, param);
                 //todo 调用接口
             }
         });
@@ -192,7 +197,7 @@
                         value = this.attributes.getNamedItem("data-value").value;
                 param[key] = value;
             });
-            param.userId = 23;
+            param.userId = <%=userId%>;
             var url = "<%=basePath%>collection/houseList";
 
             //todo 调用接口 加载table数据
@@ -235,7 +240,7 @@
                                     alert(result.msg);
                                     $('#myModal #myModalLabel').text(collectionId);
                                     $('#myModal #remarkText').text(result.data);
-                                    $('#myModal').modal('toggle');
+                                    $('#myModal').modal('show');
 
                                     $(document).on('click', '#myModal .btn-primary', function () {
                                         var id = $('#myModal #myModalLabel').text();
@@ -269,9 +274,9 @@
                         //弹出模态框
                         $('#myModal #myModalLabel').text("评论");
                         $('#myModal #remarkText').text("");
-                        $('#myModal').modal('toggle');
+                        $('#myModal').modal('show');
                         var collectionId = getSelectedRow().id;
-                        var userId = 23;
+                        var userId = <%=userId%>;
                         var param = {"collectionId": collectionId, "userId": userId};
                         var url = "<%=basePath%>comment/commentInfo";
                         //模态框提交事件
@@ -309,7 +314,8 @@
                         nowSelected.children('.bs-checkbox').children('input').attr("checked", true);
 
                         var collectionId = getSelectedRow().id;
-                        var userId = 23;
+                        var userId =
+                        <%=userId%>
                         var param = {"collectionId": collectionId, "userId": userId};
                         //todo 查看评论url
                         var url = "<%=basePath%>comment/view";

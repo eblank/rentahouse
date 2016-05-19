@@ -19,6 +19,7 @@
         <slf4j.version>1.7.12</slf4j.version>
         <mybatis.version>3.3.0</mybatis.version>
         <mybatis.generator.configurationFile>${basedir}/src/main/resources/generatorConfig.xml</mybatis.generator.configurationFile>
+        <webmagicFile>${basedir}/src/main/webapp/WEB-INF/lib</webmagicFile>
     </properties>
 
     <dependencies>
@@ -116,10 +117,80 @@
         </dependency>
 
         <!--Webmagic-->
+        <!--<dependency>-->
+        <!--<groupId>us.codecraft</groupId>-->
+        <!--<artifactId>webmagic-core</artifactId>-->
+        <!--<version>0.5.3</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
             <version>0.5.3</version>
+            <scope>system</scope>
+            <systemPath>${webmagicFile}/webmagic-core-0.5.3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>xsoup</artifactId>
+            <version>0.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.1.37</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dreamhead</groupId>
+            <artifactId>moco-core</artifactId>
+            <version>0.9.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>1.5.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.8.1</version>
         </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
@@ -224,6 +295,24 @@
                     <verbose>true</verbose>
                     <overwrite>true</overwrite>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/lib</directory>
+                            <targetPath>WEB-INF/lib</targetPath>
+                            <filtering>false</filtering>
+                            <includes>
+                                <include>**/*.jar</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+                <version>2.1.1</version>
             </plugin>
 
         </plugins>

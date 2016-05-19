@@ -43,7 +43,7 @@ public class HouseInfoProcessor implements PageProcessor {
         Html html = page.getHtml();
 
         //分页链接 发现新链接
-        List<String> pagerList = html.xpath("//div[@class='pager']/a[@class!=\"next\"]")
+        List<String> pagerList = html.xpath("//div[@class='pager']/a[@class!=\"next\"]/@href")
                 .all();
         int num = pagerList.size();
         //房屋详情链接 发现新链接

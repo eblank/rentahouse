@@ -36,8 +36,10 @@
         }
 
         button#save {
-            position: absolute;
-            left: 22%;
+            /*position: absolute;*/
+            margin-left: 40%;
+            margin-top: 30px;
+            left: 40%;
             top: 82%;
         }
 
@@ -105,12 +107,22 @@
                     <input id="mobile" type="text" value="${user.mobile}"/>
                 </td>
             </tr>
+            <tr>
+
+            </tr>
+            <tr>
+
+            </tr>
             </tbody>
         </table>
+        <div>
 
-    </fieldset>
-    <div>
         <button id="save" class="btn btn-primary">保存我的资料</button>
+        </div>
+        <div>
+        </div>
+    </fieldset>
+</div>
         <script>
             $(document).ready(function () {
                 $("button#save").click(function () {
@@ -142,7 +154,5 @@
                 });
             });
         </script>
-    </div>
-</div>
 </body>
 </html>
