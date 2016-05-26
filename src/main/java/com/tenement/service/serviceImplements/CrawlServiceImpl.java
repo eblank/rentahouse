@@ -7,7 +7,10 @@ import com.tenement.common.util.Result;
 import com.tenement.manager.TenementBloomFilter;
 import com.tenement.mapper.*;
 import com.tenement.model.*;
-import com.tenement.model.constant.*;
+import com.tenement.model.constant.QueryDecorationEnum;
+import com.tenement.model.constant.QueryRoomNumberEnum;
+import com.tenement.model.constant.QueryTowardEnum;
+import com.tenement.model.constant.UrlTypeEnum;
 import com.tenement.service.CrawlService;
 import com.tenement.service.webMagic.pipeline.CityListPipeline;
 import com.tenement.service.webMagic.pipeline.ConsolePipeline;
@@ -26,9 +29,7 @@ import us.codecraft.webmagic.scheduler.QueueScheduler;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by LXPENG on 2016/4/27.
